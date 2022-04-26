@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>商品简介</title>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="js/menu.js"></script>
+		<script type="text/javascript" src="js/n_nav.js"></script>
+		
+		<script type="text/javascript" src="js/num.js"></script>
+		<script type="text/javascript" src="js/toptop.js"> </script>
+		
+		<style type="text/css">
+		        *{
+		            padding: 0%;
+		            margin: 0%;
+		        }
+		        .calendar{
+		            margin: 45px;
+		            width: 450px;
+		            height: 350px;
+		            background: white;
+		            box-shadow: 0px 1px 1px rgba(0,0,0,.1);
+		        }
+		 
+		        .title{
+		            height: 70px;
+		            border-bottom: 1px solid rgba(0,0,0,.1);
+		            position: relative;
+		            text-align: center;
+		        }
+		 
+		        #calendar-title{
+		            font-size: 25px;
+		            text-transform: uppercase;
+		            font-family: Arial, Helvetica, sans-serif;
+		            padding: 14px 0 0 0;
+		        }
+		 
+		        #calendar-year{
+		            font-size: 15px;
+		            font-family: Arial, Helvetica, sans-serif;
+		            font-weight: normal;
+		        }
+		 
+		        #pre{
+		            position: absolute;
+		            top: 0px;
+		            left: 0px;
+		            background: url(imgs/b_left.png) no-repeat 50% 50%;
+		 
+		            /*没规定大小时，图片显示 0X0*/
+		            width: 60px;
+		            height: 70px;
+		            
+		        }
+		 
+		        #next{
+		            position: absolute;
+		            top: 0px;
+		            right: 0px;
+		            background: url(imgs/b_right.png) no-repeat 50% 50%;
+		            width: 60px;
+		            height: 70px;
+		        }  
+		 
+		        .body-list ul{
+		            font-size: 14px;
+		            font-family: Arial, Helvetica, sans-serif;
+		            font-weight: bold;
+		            width: 100%;
+		            box-sizing: border-box;
+		      
+		        }  
+		 
+		        .body-list ul li{
+		            list-style: none;
+		            /*
+		            display:inline-block; 
+		            width: 13.3%;
+		            */
+		 
+		            /*100/7 = 14.28%*/
+		            display: block;
+		            width: 14.28%;
+		            float: left;
+		 
+		            /*规定行高，垂直居中*/
+		            height: 36px;
+		            line-height: 36px;
+		            box-sizing: border-box;
+		            text-align: center;
+		            
+		        }
+		 
+		 
+		        .green{
+		            color:#6ac13c;
+		        }
+		 
+		        .lightgrey{ /*浅灰色显示过去的日期*/
+			        color:#a8a8a8;
+		        }   
+		        .darkgrey{ /*深灰色显示将来的日期*/
+			        color:#565656;
+		        }
+		 
+		        /*日期当天用绿色背景绿色文字加以显示*/
+		        .greenbox{
+		            border: 1px solid #6ac13c;
+		            background: #e9f8df;
+		        }
+		    </style>
+	</head>
+	<body>
+		<!-- Head Begin -->
+		<div class="headbg">
+			<div class="head">
+				<!-- Begin 所在收货地址 -->
+				<!-- 用<span> 来组合行内元素 -->
+				<span class="head_city_back">
+					<span class="fl">送货至:&nbsp;</span>
+					<span class="head_city">
+						<span>浙江</span>
+						<div class="head_city_bg">
+							<div class="head_city_temp"></div>
+							<div class="head_city_common">
+								<h2>请选择所在的收货地区</h2>
+								<table class="common_table" border="0" cellpadding="0" cellspacing="0" style="width: 235px; margin-top: 10px;">
+									<tr>
+										<th>A</th>
+										<td class="common_head"><span>安徽</span><span>澳门</span></td>
+									</tr>
+									<tr>
+										<th>B</th>
+										<td class="common_head"><span>北京</span></td>
+									</tr>
+									<tr>
+										<th>C</th>
+										<td class="common_head"><span>重庆</span></td>
+									</tr>
+									<tr>
+										<th>F</th>
+										<td class="common_head"><span>福建</span></td>
+									</tr>
+									<tr>
+										<th>G</th>
+										<td class="common_head"><span>广东</span><span>广西</span><span>贵州</span><span>甘肃</span></td>
+									</tr>
+									<tr>
+										<th>H</th>
+										<td class="common_head"><span>河北</span><span>河南</span><span>黑龙江</span><span>海南</span><span>湖北</span><span>湖南</span></td>
+									</tr>
+									<tr>
+										<th>J</th>
+										<td class="common_head"><span>江苏</span><span>吉林</span><span>江西</span></td>
+									</tr>
+									<tr>
+										<th>L</th>
+										<td class="common_head"><span>辽宁</span></td>
+									</tr>
+									<tr>
+										<th>N</th>
+										<td class="common_head"><span>内蒙古</span><span>宁夏</span></td>
+									</tr>
+									<tr>
+										<th>Q</th>
+										<td class="common_head"><span>上海</span><span>山东</span><span>山西</span><span>四川</span><span>陕西</span></td>
+									</tr>
+									<tr>
+										<th>T</th>
+										<td class="common_head"><span>台湾</span><span>天津</span></td>
+									</tr>
+									<tr>
+										<th>X</th>
+										<td class="common_head"><span>西藏</span><span>香港</span><span>新疆</span></td>
+									</tr>
+									<tr>
+										<th>Y</th>
+										<td class="common_head"><span>云南</span></td>
+									</tr>
+									<tr>
+										<th>Z</th>
+										<td class="common_head"><span class="common_check">浙江</span></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</span>
+				</span>
+				<!-- End 收货所在地 -->
+				
+				<!-- Begin 任务栏 -->
+				<span class="fr">
+					<span class="fl">
+						你好，请<a href="login.html">登录&nbsp;</a> 
+						<a href="regist.html" style="color: red;">免费注册</a>
+						 | <a href="#">我的订单</a>
+						 |
+					</span>
+					<span class="headshow">
+						<div class="headshow_list">
+							<a href="#">收藏夹</a>
+							<div class="headshow_list_bg">
+								<div class="head_city_temp"></div>
+								<div class="headshow_list_common">
+									<ul>
+										<li>
+											<a href="#">收藏的宝贝</a>
+										</li>
+										<li>
+											<a href="#">收藏的店铺</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="headshow_list">
+							<a href="#">客户服务</a>
+							<div class="headshow_list_bg">
+								<div class="head_city_temp"></div>
+								<div class="headshow_list_common">
+									<ul>
+										<li>
+											<a href="personcenter.html">个人中心</a>
+										</li>
+										<li>
+											<a href="#">智能助手</a>
+										</li>
+										<li>
+											<a href="#">人工客服</a>
+										</li>
+									</ul>		
+								</div>
+							</div>
+						</div>
+						<div class="headshow_list">
+							<a href="#">网站导航</a>
+							<div class="headshow_list_bg">
+								<div class="head_city_temp"></div>
+								<div class="headshow_list_common">
+									<ul>
+										<li>
+											<a href="#">主题市场</a>
+										</li>
+										<li>
+											<a href="newidea.html">创意市场</a>
+										</li>
+										<li>
+											<a href="#">精彩推荐集</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</span>
+					<span class="fl">
+						| 关注我们：
+					</span>
+					<span class="show_style">
+						<a href="#" class="style1">新浪</a>
+						<a href="#" class="style2">微信</a>
+					</span>
+					<span class="fr">
+						| 
+						<a href="#">
+							手机版
+							<img src="imgs/s_tel.png" align="absmiddle">
+						</a>
+					</span>
+				</span>
+			</div>
+		</div>
+		<!-- End 任务栏 -->
+		
+		<!-- Begin 任务栏下面 logo 搜索 购物车-->
+		<div class="top">
+			<div class="logo">
+				<a href="index.html">
+					<img src="imgs/logo.png" >
+				</a>
+			</div>
+			<div class="search">
+				<form action="">
+					<input type="text" value="" class="search_input" />
+					<input type="submit" value="搜索" class="search_button" />
+				</form>
+				<span class="f1">
+					<a href="#">蛋糕</a>
+					<a href="#">咖啡</a>
+					<a href="#">新鲜美食</a>
+					<a href="#">日用品</a>
+				</span>
+			</div>
+			<div class="info_car">
+				<div class="car_temp">购物车 [ <span>3</span> ]</div>
+				<div class="car_bg">
+					<!-- Begin 购物车未登录 -->
+					<div class="un_login">
+						还未登录！
+						<a href="login.html" style="color: #FF4E00;">马上登录</a>
+						查看购物车！
+					</div>
+					<!--End 购物车未登录-->
+					<!--Begin 购物车已登录-->
+					<ul class="cars">
+						<li>
+							<div class="img">
+								<a href="#">
+									<img src="imgs/fre_2.jpg" width="58" height="58" >
+								</a>
+							</div>
+							<div class="name">
+								<a href="#">巴西蜜柚 500g 大礼盒</a>
+							</div>
+							<div class="price">
+								<font color="#FF4E00">&nbsp;&nbsp;￥19</font> X1
+							</div>
+						</li>
+						<li>
+							<div class="img">
+								<a href="#">
+									<img src="imgs/fre_1.jpg" width="58" height="58" >
+								</a>
+							</div>
+							<div class="name">
+								<a href="#">阳澄湖大闸蟹</a>
+							</div>
+							<div class="price">
+								<font color="#FF4E00">&nbsp;&nbsp;￥39</font> X1
+							</div>
+						</li>
+						<li>
+							<div class="img">
+								<a href="#">
+									<img src="imgs/fre_3.jpg" width="58" height="58">
+								</a>
+							</div>
+							<div class="name">
+								<a href="#">科润 黑胡椒 牛排130g</a>
+							</div>
+							<div class="price">
+								<font color="#FF4E00">&nbsp;&nbsp;￥69</font> X1
+							</div>
+						</li>
+					</ul>
+					<div class="price_sum">
+						共计
+						<font color="#FF4E00"> ￥</font>
+						<span>127</span>
+					</div>
+					<div class="price_account">
+						<a href="buycar.html">去购物车结算</a>
+					</div>
+					<!--End 购物车已登录--> 
+				</div>
+			</div>
+		</div>
+		<!--End Head--> 
+		<!--Begin Menu -->
+		<div class="menu_bg">
+		    <div class="menu">
+		        <!--Begin 商品分类详情 Begin-->
+		        <div class="nav">
+		            <div class="nav_t">全部商品分类</div>
+		            <div class="leftNav none">
+		                <ul>
+		                    <li>
+		                        <div class="fj">
+		                            <span class="n_img"><span></span><img src="imgs/nav1.png" /></span>
+		                            <span class="fl">进口食品、生鲜</span>
+		                        </div>
+		                        <div class="zj">
+		                            <div class="zj_l">
+		                                <div class="zj_l_c">
+		                                    <h2>零食 / 糖果 / 巧克力</h2>
+		                                    <a href="#">坚果</a>|<a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a
+		                                        href="#">巧克力</a>|
+		                                    <a href="#">口香糖</a>|<a href="#">海苔</a>|<a href="#">鱼干</a>|<a href="#">蜜饯</a>|<a
+		                                        href="#">红枣</a>|
+		                                    <a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a href="#">蜜饯</a>|
+		                                </div>
+		                                <div class="zj_l_c">
+		                                    <h2>零食 / 糖果 / 巧克力</h2>
+		                                    <a href="#">坚果</a>|<a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a
+		                                        href="#">巧克力</a>|
+		                                    <a href="#">口香糖</a>|<a href="#">海苔</a>|<a href="#">鱼干</a>|<a href="#">蜜饯</a>|<a
+		                                        href="#">红枣</a>|
+		                                    <a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a href="#">蜜饯</a>|
+		                                </div>
+		                                <div class="zj_l_c">
+		                                    <h2>零食 / 糖果 / 巧克力</h2>
+		                                    <a href="#">坚果</a>|<a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a
+		                                        href="#">巧克力</a>|
+		                                    <a href="#">口香糖</a>|<a href="#">海苔</a>|<a href="#">鱼干</a>|<a href="#">蜜饯</a>|<a
+		                                        href="#">红枣</a>|
+		                                    <a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a href="#">蜜饯</a>|
+		                                </div>
+		                                <div class="zj_l_c">
+		                                    <h2>零食 / 糖果 / 巧克力</h2>
+		                                    <a href="#">坚果</a>|<a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a
+		                                        href="#">巧克力</a>|
+		                                    <a href="#">口香糖</a>|<a href="#">海苔</a>|<a href="#">鱼干</a>|<a href="#">蜜饯</a>|<a
+		                                        href="#">红枣</a>|
+		                                    <a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a href="#">蜜饯</a>|
+		                                </div>
+		                                <div class="zj_l_c">
+		                                    <h2>零食 / 糖果 / 巧克力</h2>
+		                                    <a href="#">坚果</a>|<a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a
+		                                        href="#">巧克力</a>|
+		                                    <a href="#">口香糖</a>|<a href="#">海苔</a>|<a href="#">鱼干</a>|<a href="#">蜜饯</a>|<a
+		                                        href="#">红枣</a>|
+		                                    <a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a href="#">蜜饯</a>|
+		                                </div>
+		                                <div class="zj_l_c">
+		                                    <h2>零食 / 糖果 / 巧克力</h2>
+		                                    <a href="#">坚果</a>|<a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a
+		                                        href="#">巧克力</a>|
+		                                    <a href="#">口香糖</a>|<a href="#">海苔</a>|<a href="#">鱼干</a>|<a href="#">蜜饯</a>|<a
+		                                        href="#">红枣</a>|
+		                                    <a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a href="#">蜜饯</a>|
+		                                </div>
+		                            </div>
+		                            <div class="zj_r">
+		                                <a href="#"><img src="imgs/food_b1.jpg" width="236" height="200" /></a>
+		                                <a href="#"><img src="imgs/food_b2.jpg" width="236" height="200" /></a>
+		                            </div>
+		                        </div>
+		                    </li>
+		                    <li>
+		                        <div class="fj">
+		                            <span class="n_img"><span></span><img src="imgs/nav2.png" /></span>
+		                            <span class="fl">食品、饮料、酒</span>
+		                        </div>
+		                        <div class="zj" style="top:-40px;">
+		                            <div class="zj_l">
+		                                <div class="zj_l_c">
+		                                    <h2>零食 / 糖果 / 巧克力2</h2>
+		                                    <a href="#">坚果</a>|<a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a
+		                                        href="#">巧克力</a>|
+		                                    <a href="#">口香糖</a>|<a href="#">海苔</a>|<a href="#">鱼干</a>|<a href="#">蜜饯</a>|<a
+		                                        href="#">红枣</a>|
+		                                    <a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a href="#">蜜饯</a>|
+		                                </div>
+		                                <div class="zj_l_c">
+		                                    <h2>零食 / 糖果 / 巧克力</h2>
+		                                    <a href="#">坚果</a>|<a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a
+		                                        href="#">巧克力</a>|
+		                                    <a href="#">口香糖</a>|<a href="#">海苔</a>|<a href="#">鱼干</a>|<a href="#">蜜饯</a>|<a
+		                                        href="#">红枣</a>|
+		                                    <a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a href="#">蜜饯</a>|
+		                                </div>
+		                            </div>
+		                            <div class="zj_r">
+		                                <a href="#"><img src="imgs/fre_b1.jpg" width="236" height="200" /></a>
+		                                <a href="#"><img src="imgs/fre_b2.jpg" width="236" height="200" /></a>
+		                            </div>
+		                        </div>
+		                    </li>
+		                </ul>
+		            </div>
+		        </div>
+		        <!--End 商品分类详情 End-->
+		        <ul class="menu_r">
+		            <li><a href="index.html">首页</a></li>
+		            <li><a href="food.html">美食</a></li>
+		            <li><a href="#">生鲜</a></li>
+		            <li><a href="#">团购</a></li>
+		        </ul>
+		        <div class="m_ad">双十一送好礼！</div>
+		    </div>
+		</div>
+		<!--End Menu-->
+		<!--Begin 详细 -->
+		<div class="i_bg">
+		    <div class="postion">
+		        <span class="fl">全部 > 进口食品 > 饼干 </span>
+		    </div>
+		    <div class="content">
+		
+		        <div id="tsShopContainer">
+		            <div id="tsImgS"><a href="#" title="Images" ><img
+		                        src="imgs/p_big.jpg" width="390" height="390" /></a></div>
+		            <div id="tsPicContainer">
+		                <div id="tsImgSCon" style="margin-top:400px;">
+		                    <ul >
+		                        <li onclick="showPic(0)" rel="MagicZoom" class="tsSelectImg"><img src="imgs/ps1.jpg"
+		                                tsImgS="imgs/ps1.jpg" width="79" height="79" /></li>
+		                        <li onclick="showPic(1)" rel="MagicZoom"><img src="imgs/ps2.jpg" tsImgS="imgs/ps2.jpg"
+		                                width="79" height="79" /></li>
+		                        <li onclick="showPic(2)" rel="MagicZoom"><img src="imgs/ps3.jpg" tsImgS="imgs/ps3.jpg"
+		                                width="79" height="79" /></li>
+		                        <li onclick="showPic(3)" rel="MagicZoom"><img src="imgs/ps4.jpg" tsImgS="imgs/ps4.jpg"
+		                                width="79" height="79" /></li>
+		        
+		                    </ul>
+		                </div>
+		            </div>
+		        </div>
+		
+		        <div class="pro_des">
+		            <div class="des_name">
+		                <p>印尼进口网红零食 丹麦皇冠曲奇饼干礼盒 90g 72g 908g零食大礼包</p>
+		                “开业巨惠，印尼直供”，不光低价，“真”才靠谱！
+		            </div>
+		            <div class="des_price">
+		                本店价格：<b>￥4.50-88.00</b><br />
+		                消费积分：<span>28R</span>
+		            </div>
+		            <div class="des_choice">
+		                <span class="fl">包装选择：</span>
+		                <ul>
+		                    <li class="checked">72g<div class="ch_img"></div>
+		                    </li>
+		                    <li>90g<div class="ch_img"></div>
+		                    </li>
+		                </ul>
+		            </div>
+		            <div class="des_choice">
+		                <span class="fl">型号选择：</span>
+		                <ul>
+		                    <li>原味<div class="ch_img"></div>
+		                    </li>
+		                    <li class="checked">葡萄干曲奇<div class="ch_img"></div>
+		                    </li>
+		                </ul>
+		            </div>
+		            <div class="des_share">
+		                <div class="d_sh">
+		                    分享
+		                    <div class="d_sh_bg">
+		                        <a href="#"><img src="imgs/sh_1.gif" /></a>
+		                        <a href="#"><img src="imgs/sh_2.gif" /></a>
+		                        <a href="#"><img src="imgs/sh_3.gif" /></a>
+		                        <a href="#"><img src="imgs/sh_4.gif" /></a>
+		                        <a href="#"><img src="imgs/sh_5.gif" /></a>
+		                    </div>
+		                </div>
+		                
+		            </div>
+		            <div class="des_join">
+		                <div class="j_nums">
+		                    <input type="text" onkeyup="this.value=this.value.replace(/\D/g, '')" value="1" name="" class="n_ipt" />
+		                    <input type="button" value="" onclick="addUpdate(jq(this));" class="n_btn_1" />
+		                    <input type="button" value="" onclick="jianUpdate(jq(this));" class="n_btn_2" />
+		                </div>
+		                <span class="fl"><a onclick="ShowDiv_1('MyDiv1','fade1')"><img src="imgs/j_car.png" /></a></span>
+		            </div>
+		        </div>
+		
+		        <div class="s_brand">
+		            <div class="s_brand_img"><img src="imgs/ps2.jpg" width="188" height="132" /></div>
+		            <div class="s_brand_c"><a href="#">进入品牌专区</a></div>
+		        </div>
+				
+		
+		    </div>
+		
+			<div class="calendar" style="margin-left: 880px;margin-top: -300px;">
+			        <div class="title">
+			            <h1 class="green" id="calendar-title">Month</h1>
+			            <h2 class="green" id="calendar-year">Year</h2>
+			            <a href="" id="pre"></a>
+			            <a href="" id="next"></a>
+			        </div>
+			 
+			        <div class="body">
+			            <div class="lightgrey body-list">
+			                <ul>
+			                    <li>SUN</li>
+			                    <li>MON</li>
+			                    <li>TUE</li>
+			                    <li>WED</li>
+			                    <li>THU</li>
+			                    <li>FRI</li>
+			                    <li>SAT</li>
+			                    
+			                </ul>
+			 
+			            </div>
+			 
+			            <div class="darkgrey body-list">
+			                <ul id="days">
+			 
+			                </ul>
+			            </div>
+			        </div>
+			    </div>
+			
+		    <div class="content mar_20">
+		        <div class="l_history">
+		            <div class="fav_t">用户还喜欢</div>
+		            <ul>
+		                <li>
+		                    <div class="img"><a href="#"><img src="imgs/hot1.jpg" width="185" height="162" /></a></div>
+		                    <div class="name"><a href="#">印尼进口网红零食 丹麦皇冠曲奇饼干礼盒 90g 72g 908g零食大礼包</a></div>
+		                    <div class="price">
+		                        <font>￥<span>368.00</span></font> &nbsp; 18R
+		                    </div>
+		                </li>
+		                <li>
+		                    <div class="img"><a href="#"><img src="imgs/food_6.jpg" width="185" height="162" /></a></div>
+		                    <div class="name"><a href="#">印尼进口网红零食 丹麦皇冠曲奇饼干礼盒 90g 72g 908g零食大礼包</a></div>
+		                    <div class="price">
+		                        <font>￥<span>768.00</span></font> &nbsp; 18R
+		                    </div>
+		                </li>
+		                <li>
+		                    <div class="img"><a href="#"><img src="imgs/hot3.jpg" width="185" height="162" /></a></div>
+		                    <div class="name"><a href="#">印尼进口网红零食 丹麦皇冠曲奇饼干礼盒 90g 72g 908g零食大礼包</a></div>
+		                    <div class="price">
+		                        <font>￥<span>680.00</span></font> &nbsp; 18R
+		                    </div>
+		                </li>
+		                <li>
+		                    <div class="img"><a href="#"><img src="imgs/hot4.jpg" width="185" height="162" /></a></div>
+		                    <div class="name"><a href="#">印尼进口网红零食 丹麦皇冠曲奇饼干礼盒 90g 72g 908g零食大礼包</a></div>
+		                    <div class="price">
+		                        <font>￥<span>368.00</span></font> &nbsp; 18R
+		                    </div>
+		                </li>
+		                <li>
+		                    <div class="img"><a href="#"><img src="imgs/food_5.jpg" width="185" height="162" /></a></div>
+		                    <div class="name"><a href="#">印尼进口网红零食 丹麦皇冠曲奇饼干礼盒 90g 72g 908g零食大礼包</a></div>
+		                    <div class="price">
+		                        <font>￥<span>368.00</span></font> &nbsp; 18R
+		                    </div>
+		                </li>
+		            </ul>
+		        </div>
+		        <div class="l_list">
+		            <div class="des_border">
+		                <div class="des_tit">
+		                    <ul>
+		                        <li class="current"><a href="#p_attribute">商品属性</a></li>
+		                        <li><a href="#p_details">商品详情</a></li>
+		                        <li><a href="#p_comment">商品评论</a></li>
+		                    </ul>
+		                </div>
+		                <div class="des_con" id="p_attribute">
+		
+		                    <table border="0" align="center" style="width:100%; font-family:'宋体'; margin:10px auto;"
+		                        cellspacing="0" cellpadding="0">
+		                        <tr>
+		                            印尼进口网红零食 丹麦皇冠曲奇饼干礼盒 90g 72g 908g零食大礼包
+		                            <td>商品名称：丹麦皇冠曲奇饼干礼盒</td>
+		                            <td>商品编号：1546211</td>
+		                            <td>上架时间：2019-09-06 09:19:09 </td>
+		                        </tr>
+		                        <tr>
+		                            <td>商品毛重：160.00g</td>
+		                            <td>商品产地：印尼</td>
+		                            <td>&nbsp;</td>
+		                        </tr>
+		                        <tr>
+		                            <td>重量：72g-908g </td>
+		                            <td>类型：印尼 进口网红零食</td>
+		                            <td>&nbsp;</td>
+		                            <td>&nbsp;</td>
+		                        </tr>
+		                    </table>
+		
+		
+		                </div>
+		            </div>
+		
+		            <div class="des_border" id="p_details">
+		                <div class="des_t">商品详情</div>
+		                <div class="des_con">
+		                    <p align="center">
+		                        <img src="imgs/de1.jpg" width="746" />
+		                        <img src="imgs/de2.jpg" width="746" />
+		                        <img src="imgs/de3.jpg" width="750" />
+		                        <img src="imgs/de4.jpg" width="750" />
+		                        <img src="imgs/de5.jpg" width="750" />
+		                    </p>
+		
+		                </div>
+		            </div>
+		
+		            <div class="des_border" id="p_comment">
+		                <div class="des_t">商品评论</div>
+		
+		                <table border="0" class="jud_tab" cellspacing="0" cellpadding="0">
+		                    <tr>
+		                        <td width="175" class="jud_per">
+		                            <p>80.0%</p>好评度
+		                        </td>
+		                        <td width="300">
+		                            <table border="0" style="width:100%;" cellspacing="0" cellpadding="0">
+		                                <tr>
+		                                     <td width="90">好评<font color="#999999">（80%）<meter value="80" max="100" min="0" ></meter></font>
+											 </td>
+
+		                                </tr>
+		                                <tr>
+											<td>中评<font color="#999999">（20%）<meter value="20" max="100" min="0" ></meter></font>
+											</td>
+		                                </tr>
+		                                <tr>
+											<td>差评<font color="#999999">（0%）&nbsp;&nbsp;<meter value="0" max="100" min="0" ></meter></font>
+											</td>
+		                                </tr>
+		                            </table>
+		                        </td>
+		                        <td width="185" class="jud_bg">
+		                            购买过商品的顾客，在收到商品才可以对该商品发表评论
+		                        </td>
+		                        <td class="jud_bg">您可对已购买商品进行评价<br /><a href="#"><img src="imgs/btn_jud.gif" /></a></td>
+		                    </tr>
+		                </table>
+		
+		
+		
+		                <table border="0" class="jud_list" style="width:100%; margin-top:30px;" cellspacing="0"
+		                    cellpadding="0">
+		                    <tr valign="top">
+		                        <td width="160"><img src="imgs/peo1.jpg" width="20" height="20"
+		                                align="absmiddle" />&nbsp;向死而生</td>
+		                        <td width="180">
+		                            包装规格：<font color="#999999">90g-葡萄干曲奇</font> <br />
+		                        </td>
+		                        <td>
+		                            很喜欢，必须给赞。 <br />
+		                            <font color="#999999">2019-10-24</font>
+		                        </td>
+		                    </tr>
+		                    <tr valign="top">
+		                        <td width="160"><img src="imgs/peo2.jpg" width="20" height="20"
+		                                align="absmiddle" />&nbsp;就是这么想的</td>
+		                        <td width="180">
+		                            包装规格：<font color="#999999">90g-葡萄干曲奇</font> <br />
+		
+		                        </td>
+		                        <td>
+		                            送朋友，她很喜欢，大爱。 <br />
+		                            <font color="#999999">2019-09-24</font>
+		                        </td>
+		                    </tr>
+		                    <tr valign="top">
+		                        <td width="160"><img src="imgs/peo3.jpg" width="20" height="20"
+		                                align="absmiddle" />&nbsp;墨镜墨镜</td>
+		                        <td width="180">
+		                            包装规格：<font color="#999999">90g-葡萄干曲奇</font> <br />
+		                        </td>
+		                        <td>
+		                            大家都说不错<br />
+		                            <font color="#999999">2019-11-02</font>
+		                        </td>
+		                    </tr>
+		                    <tr valign="top">
+		                        <td width="160"><img src="imgs/peo4.jpg" width="20" height="20"
+		                                align="absmiddle" />&nbsp;那*****洋 <br />
+		                            <font color="#999999">（匿名用户）</font>
+		                        </td>
+		                        <td width="180">
+		                            包装规格：<font color="#999999">90g-葡萄干曲奇</font> <br />
+		                        </td>
+		                        <td>
+		                            下次还会来买，推荐。<br />
+		                            <font color="#999999">2019-09-24</font>
+		                        </td>
+		                    </tr>
+		                </table>
+		
+		
+		
+		                <div class="pages">
+		                    <a href="#" class="p_pre">上一页</a><a href="#" class="cur">1</a><a href="#">2</a><a
+		                        href="#">3</a>...<a href="#">20</a><a href="#" class="p_pre">下一页</a>
+		                </div>
+		
+		            </div>
+		
+		
+		        </div>
+		    </div>
+		</div>
+		
+		<!--返回顶部-->
+		<div class="gotop">
+			<a href="buycar.html">
+				<dl>
+					<dt><img src="imgs/gt1.png"/></dt>
+					<dd>去购<br />物车</dd>
+				</dl>
+			</a>
+			<a href="personcenter.html">
+				<dl>
+					<dt><img src="imgs/gt3.png"/></dt>
+					<dd>个人<br />中心</dd>
+				</dl>
+			</a>
+			<a href="#" class="toptop">
+				<dl>
+					<dt><img src="imgs/gt4.png"/></dt>
+					<dd>返回<br />顶部</dd>
+				</dl>
+			</a>
+		</div>
+		
+		<!--Begin Footer-->
+		<div class="behind_bottom_bg behind_bottom_common">
+			<div class="behind_bottom">
+				<table border="0" style="width:210px; height:62px; float:left; margin-left:75px; margin-top:30px;" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="72"><img src="imgs/b1.png" width="62" height="62" /></td>
+						<td>
+							<h2>正品保障</h2>正品行货 放心购买
+						</td>
+					</tr>
+				</table>
+				<table border="0" style="width:210px; height:62px; float:left; margin-left:75px; margin-top:30px;" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="72"><img src="imgs/b2.png" width="62" height="62" /></td>
+						<td>
+							<h2>满38包邮</h2>满38包邮 免运费
+						</td>
+					</tr>
+				</table>
+				<table border="0" style="width:210px; height:62px; float:left; margin-left:75px; margin-top:30px;" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="72"><img src="imgs/b3.png" width="62" height="62" /></td>
+						<td>
+							<h2>天天低价</h2>天天低价 畅选无忧
+						</td>
+					</tr>
+				</table>
+				<table border="0" style="width:210px; height:62px; float:left; margin-left:75px; margin-top:30px;" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="72"><img src="imgs/b4.png" width="62" height="62" /></td>
+						<td>
+							<h2>准时送达</h2>收货时间由你做主
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="behind_nav">
+			<dl>
+				<dt><a href="#">新手上路</a></dt>
+				<dd><a href="#">售后流程</a></dd>
+				<dd><a href="#">购物流程</a></dd>
+				<dd><a href="#">订购方式</a></dd>
+				<dd><a href="#">隐私声明</a></dd>
+				<dd><a href="#">推荐分享说明</a></dd>
+			</dl>
+			<dl>
+				<dt><a href="#">配送与支付</a></dt>
+				<dd><a href="#">货到付款区域</a></dd>
+				<dd><a href="#">配送支付查询</a></dd>
+				<dd><a href="#">支付方式说明</a></dd>
+			</dl>
+			<dl>
+				<dt><a href="#">会员中心</a></dt>
+				<dd><a href="#">资金管理</a></dd>
+				<dd><a href="#">我的收藏</a></dd>
+				<dd><a href="#">我的订单</a></dd>
+			</dl>
+			<dl>
+				<dt><a href="#">服务保证</a></dt>
+				<dd><a href="#">退换货原则</a></dd>
+				<dd><a href="#">售后服务保证</a></dd>
+				<dd><a href="#">产品质量保证</a></dd>
+			</dl>
+			<dl>
+				<dt><a href="#">联系我们</a></dt>
+				<dd><a href="#">网站故障报告</a></dd>
+				<dd><a href="#">购物咨询</a></dd>
+				<dd><a href="#">投诉与建议</a></dd>
+			</dl>
+			<div class="behind_tell_bg">
+				<a href="#" class="bottom_style1">新浪微博</a>
+				<a href="#" class="bottom_style2">腾讯微博</a>
+				<p>
+					服务热线：<br/>
+					<span>400-123-4567</span>
+				</p>
+			</div>
+		
+		</div>
+		<div class="bottom_bg">
+			<div class="bottom">
+				备案/许可证编号：京ICP备120093xxxx号 Copyright © 2015-2019 进口商城商城网 All Rights Reserved. <br />
+				<a href="#"> <img src="imgs/b_1.gif" width="98" height="33" > </a>
+				<a href="#"> <img src="imgs/b_2.gif" width="98" height="33" > </a>
+				<a href="#"> <img src="imgs/b_3.gif" width="98" height="33" > </a>
+				<a href="#"> <img src="imgs/b_4.gif" width="98" height="33" > </a>
+				<a href="#"> <img src="imgs/b_5.gif" width="98" height="33" > </a>
+				<a href="#"> <img src="imgs/b_6.gif" width="98" height="33" > </a>
+			</div>
+		</div>
+		<!--End Footer -->
+	</body>
+	<script type="text/javascript">
+	        var month_olypic = [31,29,31,30,31,30,31,31,30,31,30,31];//闰年每个月份的天数
+	        var month_normal = [31,28,31,30,31,30,31,31,30,31,30,31];
+	        var month_name =["January","Febrary","March","April","May","June","July","Auguest","September","October","November","December"];
+	        //获取以上各个部分的id
+	        var holder = document.getElementById("days");
+	        var prev = document.getElementById("prev");
+	        var next = document.getElementById("next");
+	        var ctitle = document.getElementById("calendar-title");
+	        var cyear = document.getElementById("calendar-year");
+	        //获取当天的年月日
+	        var my_date = new Date();
+	        var my_year = my_date.getFullYear();//获取年份
+	        var my_month = my_date.getMonth(); //获取月份，一月份的下标为0
+	        var my_day = my_date.getDate();//获取当前日期
+	 
+	        //根据年月获取当月第一天是周几
+	        function dayStart(month,year){
+	            var tmpDate = new Date(year, month, 1);
+	            return (tmpDate.getDay());
+	        }
+	        //根据年份判断某月有多少天(11,2018),表示2018年12月
+	        function daysMonth(month, year){
+	            var tmp1 = year % 4;
+	            var tmp2 = year % 100;
+	            var tmp3 = year % 400;
+	 
+	            if((tmp1 == 0 && tmp2 != 0) || (tmp3 == 0)){
+	                return (month_olypic[month]);//闰年
+	            }else{
+	                return (month_normal[month]);//非闰年
+	            }
+	        }
+	        //js实现str插入li+class,不要忘了用innerhtml进行插入
+	        function refreshDate(){
+	            var str = "";
+	            //计算当月的天数和每月第一天都是周几，day_month和day_year都从上面获得
+	            var totalDay = daysMonth(my_month,my_year);
+	            var firstDay = dayStart(my_month, my_year);
+	            //添加每个月的空白部分
+	            for(var i = 0; i < firstDay; i++){
+	                str += "<li>"+"</li>";
+	            }
+	 
+	            //从一号开始添加知道totalDay，并为pre，next和当天添加样式
+	            var myclass;
+	            for(var i = 1; i <= totalDay; i++){
+	                //三种情况年份小，年分相等月份小，年月相等，天数小
+	                //点击pre和next之后，my_month和my_year会发生变化，将其与现在的直接获取的再进行比较
+	                //i与my_day进行比较,pre和next变化时，my_day是不变的
+	                console.log(my_year+" "+my_month+" "+my_day);
+	                console.log(my_date.getFullYear()+" "+my_date.getMonth()+" "+my_date.getDay());
+	                if((my_year < my_date.getFullYear())||(my_year == my_date.getFullYear() && my_month < my_date.getMonth()) || (my_year == my_date.getFullYear() && my_month == my_date.getMonth() && i < my_day)){
+	                    myclass = " class='lightgrey'";
+	                }else if(my_year == my_date.getFullYear() && my_month == my_date.getMonth() && i == my_day){
+	                    myclass = "class = 'green greenbox'";
+	                }else{
+	                    myclass = "class = 'darkgrey'";
+	                }
+	                str += "<li "+myclass+">"+i+"</li>";
+	            }
+	            holder.innerHTML = str;
+	            ctitle.innerHTML = month_name[my_month];
+	            cyear.innerHTML = my_year;
+	        }
+	        //调用refreshDate()函数，日历才会出现
+	        refreshDate();
+	        //实现onclick向前或向后移动
+	        pre.onclick = function(e){
+	            e.preventDefault();
+	            my_month--;
+	            if(my_month < 0){
+	                my_year--;
+	                my_month = 11; //即12月份
+	            }
+	            refreshDate();
+	        }
+	        
+	        next.onclick = function(e){
+	            e.preventDefault();
+	            my_month++;
+	            if(my_month > 11){
+	                my_month = 0;
+	                my_year++;
+	            }
+	            refreshDate();
+	        }
+	</script>
+	<script src="js/ShopShow.js" type="text/javascript" charset="utf-8"></script>
+</html>
